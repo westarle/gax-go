@@ -1,0 +1,16 @@
+linters:
+  disable-all: true
+  enable:
+    - revive
+    - staticcheck
+
+linters-settings:
+  revive:
+    rules:
+      - name: exported
+        arguments:
+          - "disableStutteringCheck"
+
+issues:
+  exclude-files:
+    - '.*\.pb\.go$'
