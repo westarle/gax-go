@@ -35,7 +35,6 @@ package callctx
 import (
 	"context"
 	"fmt"
-	"log/slog"
 )
 
 const (
@@ -125,22 +124,4 @@ func WithTelemetryContext(ctx context.Context, keyvals ...string) context.Contex
 func TelemetryFromContext(ctx context.Context, key string) (string, bool) {
 	val, ok := ctx.Value(telemetryKey(key)).(string)
 	return val, ok
-}
-
-// loggerKey is a private type used to store/retrieve the logger context value.
-type loggerContextKey string
-
-const loggerCKey = loggerContextKey("logger")
-
-// WithLoggerContext injects a slog.Logger into the context. This logger will
-// be extracted by the client library or transport wrappers to emit logs.
-func WithLoggerContext(ctx context.Context, logger *slog.Logger) context.Context {
-	return context.WithValue(ctx, loggerCKey, logger)
-}
-
-// LoggerFromContext extracts a slog.Logger from the context.
-// The returned bool indicates whether a logger was found.
-func LoggerFromContext(ctx context.Context) (*slog.Logger, bool) {
-	logger, ok := ctx.Value(loggerCKey).(*slog.Logger)
-	return logger, ok
 }
